@@ -10,7 +10,8 @@
 
 int radPin = 2;
 int buzzPin = 7;
-volatile unsigned long counts = 0;
+//volatile unsigned long counts = 0;
+volatile byte counts = 0;
 volatile int blip = 0;
 unsigned long previousMillis = 0;
 unsigned long cmp = 0;
@@ -21,7 +22,7 @@ void tubeImpulse() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   pinMode(buzzPin, OUTPUT);
   pinMode(radPin, INPUT_PULLUP);
   interrupts();
@@ -47,8 +48,8 @@ void loop() {
   }
   if (currentMillis - previousMillis > LOG_PERIOD) {
     previousMillis = currentMillis;
-    //Serial.write(counts);
-    Serial.println(counts);
+    Serial.write(counts);
+    //Serial.println(counts);
     counts = 0;
   }
 
