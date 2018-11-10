@@ -6,7 +6,7 @@
 #include <SPI.h> // Serial libary to send data to main computer
 
 
-#define LOG_PERIOD 350   // Logging period in miliseconds
+#define LOG_PERIOD 50   // Logging period in miliseconds
 
 int radPin = 2;
 int buzzPin = 7;

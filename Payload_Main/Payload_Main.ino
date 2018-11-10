@@ -8,7 +8,7 @@ const int chipSelect = BUILTIN_SDCARD;
 int ledPin=13;
 int buzzPin = 35;
 
-int timeDelay=100; //Data logging rate in ms (50 = 20Hz)
+unsigned int timeDelay = 50; //Data logging rate in ms (50 = 20Hz)
 int led = 1; //Toggling variable to store LED status
 
 //Initialize variables to store sensor readings
@@ -28,7 +28,7 @@ int TempV;
 int PresV;
 int HumidityV;
 
-unsigned long t=millis(); //Variable to keep track of time
+unsigned long t = millis(); //Variable to keep track of time
 
 void setup()  {
   //Set LED and buzzer pins to output mode
@@ -36,6 +36,7 @@ void setup()  {
   pinMode(buzzPin, OUTPUT);
   
   //Open radiation serial ports, wait for port to open
+  Serial.begin(9600);
   Serial2.begin(9600);
   Serial3.begin(9600);
   delay(1000);
@@ -106,7 +107,7 @@ void loop() {
 
   //Open the file on the SD card and print all variables in
   //.csv format. Format is [time,hum,temp,...,rad1,rad2]
-  myFile = SD.open("test.txt", FILE_WRITE);
+  myFile = SD.open("test.csv", FILE_WRITE);
   myFile.print(t / 1000.); myFile.print(",");
   myFile.print(HumidityV); myFile.print(",");
   myFile.print(TempV); myFile.print(",");
@@ -127,5 +128,5 @@ void loop() {
 
   //Quick loop to set logging rate accurately. Loops until
   //current loop time is higher than logging variable
-  while(millis()-t<timeDelay){};
+  while(millis()- t < timeDelay){};
 }
