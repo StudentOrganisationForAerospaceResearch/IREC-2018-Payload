@@ -1,5 +1,6 @@
-# IREC 2018 Payload
+# SOAR IREC 2018 Payload
 Payload for the 2018 IREC Rocket
+Produced by the Student Organization for Aerospace Research (SOAR)
 ________________________________
 
 Developed for the Tenseey 3.5 Microcontroller and two Arduino Nano Microcontrollers. The Payload does the following things:
