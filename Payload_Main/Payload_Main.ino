@@ -12,8 +12,8 @@ int timeDelay=100; //Data logging rate in ms (50 = 20Hz)
 int led = 1; //Toggling variable to store LED status
 
 //Initialize variables to store sensor readings
-int Rad1;
-int Rad2;
+char Rad1[5];
+char Rad2[5];
 int PhotoV1;
 int PhotoV2;
 int PhotoV3;
@@ -29,6 +29,9 @@ int PresV;
 int HumidityV;
 
 unsigned long t=millis(); //Variable to keep track of time
+
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 void setup()  {
   //Set LED and buzzer pins to output mode
@@ -73,6 +76,9 @@ void setup()  {
   }
 }
 
+/////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
+
 void loop() {
   
   t=millis(); //Update t to current time in milliseconds
@@ -94,12 +100,14 @@ void loop() {
   ThermV5 = analogRead(A1);
   ThermV6 = analogRead(A0);
 
-  //The radiation Arduinos spit out serial data in integers, 
-  //corresponding to the radiation events triggered since the
-  //last transmit. -1 corresponds to no data, 255 corresponds
-  //to MORE THAN 253 radiation events since last transmit
-  Rad1=Serial3.read(); 
-  Rad2=Serial2.read();
+  //Radiation counts is sent as a series of characters (each 1 byte)
+  //instead of a number, because the number can only be a max of 255,
+  //while here our maximum number is 99999 (this also can be increased 
+  //if needed). It should be impossible to receive 99999 as one of the 
+  //count amounts.
+  
+  Serial3.readBytes(Rad1,5);
+  Serial2.readBytes(Rad2,5);
 
   //Toggle the onboard LED (just for debugging)
   digitalWrite(ledPin, led);
@@ -124,7 +132,7 @@ void loop() {
   myFile.print(Rad1); myFile.print(",");
   myFile.println(Rad2);
   myFile.close(); //close file after write (more robust)
-
+  
   //Quick loop to set logging rate accurately. Loops until
   //current loop time is higher than logging variable
   while(millis()-t<timeDelay){};
