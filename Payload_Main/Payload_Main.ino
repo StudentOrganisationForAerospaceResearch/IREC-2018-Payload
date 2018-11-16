@@ -12,8 +12,8 @@ int timeDelay=100; //Data logging rate in ms (50 = 20Hz)
 int led = 1; //Toggling variable to store LED status
 
 //Initialize variables to store sensor readings
-char Rad1[5];
-char Rad2[5];
+char Rad1[]="00000";
+char Rad2[]="00000";
 int PhotoV1;
 int PhotoV2;
 int PhotoV3;
